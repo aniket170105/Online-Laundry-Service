@@ -19,8 +19,7 @@ public class Shirts {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "image")
-    @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
 
     @ManyToOne

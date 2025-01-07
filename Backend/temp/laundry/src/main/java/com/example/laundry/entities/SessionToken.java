@@ -12,6 +12,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Data
 public class SessionToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

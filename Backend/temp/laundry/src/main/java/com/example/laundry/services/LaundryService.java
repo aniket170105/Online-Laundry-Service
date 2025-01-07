@@ -4,10 +4,13 @@ package com.example.laundry.services;
 import com.example.laundry.entities.*;
 import com.example.laundry.repository.*;
 import com.example.laundry.request.LaundrySubmitDTO;
+import com.example.laundry.request.PantsDTO;
+import com.example.laundry.request.ShirtsDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.*;
+import java.util.*;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -59,22 +62,32 @@ public class LaundryService {
         laundry = laundryRepository.save(laundry);
 
         if (laundrySubmitDTO.getMessage() != null) {
-            Message message = laundrySubmitDTO.getMessage();
+            Message message = new Message();
+            message.setMessage(laundrySubmitDTO.getMessage().message);
+
             message.setLaundry(laundry);
             messageRepository.save(message);
         }
 
         if (laundrySubmitDTO.getPants() != null && !laundrySubmitDTO.getPants().isEmpty()) {
-            for (Pants pants : laundrySubmitDTO.getPants()) {
-                pants.setLaundry(laundry);
-                pantsRepository.save(pants);
+            for (PantsDTO pants : laundrySubmitDTO.getPants()) {
+                Pants res = new Pants();
+
+                byte[] imageBytes = Base64.getDecoder().decode(pants.image);
+                res.setImage(imageBytes);
+                res.setLaundry(laundry);
+                pantsRepository.save(res);
             }
         }
 
         if (laundrySubmitDTO.getShirts() != null && !laundrySubmitDTO.getShirts().isEmpty()) {
-            for (Shirts shirts : laundrySubmitDTO.getShirts()) {
-                shirts.setLaundry(laundry);
-                shirtsRepository.save(shirts);
+            for (ShirtsDTO shirts : laundrySubmitDTO.getShirts()) {
+                Shirts res = new Shirts();
+
+                byte[] imageBytes = Base64.getDecoder().decode(shirts.image);
+                res.setImage(imageBytes);
+                res.setLaundry(laundry);
+                shirtsRepository.save(res);
             }
         }
     }

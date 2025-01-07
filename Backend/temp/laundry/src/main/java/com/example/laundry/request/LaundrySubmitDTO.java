@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -17,8 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 public class LaundrySubmitDTO {
 
-    private Message message;
-    private List<Pants> pants;
-    private List<Shirts> shirts;
+    public MessageDTO message;
+    public List<PantsDTO> pants;
+    public List<ShirtsDTO> shirts;
 
 }
+

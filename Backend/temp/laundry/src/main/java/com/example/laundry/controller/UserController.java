@@ -5,16 +5,18 @@ import com.example.laundry.entities.Laundry;
 import com.example.laundry.entities.User;
 import com.example.laundry.request.LaundrySubmitDTO;
 import com.example.laundry.request.UpdateProfileDTO;
+import com.example.laundry.request.laundry.LaundryDTO;
 import com.example.laundry.services.JwtService;
 import com.example.laundry.services.LaundryService;
 import com.example.laundry.services.UserService;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,10 +31,10 @@ public class UserController {
     LaundryService laundryService;
 
     @GetMapping("user/v1/profile")
-    public ResponseEntity<String> userProfile(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String authHeader) {
+    public ResponseEntity<User> userProfile(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body("Missing or invalid Authorization header");
+                    .body(null);
         }
 
         String token = authHeader.substring(7);
@@ -40,10 +42,10 @@ public class UserController {
         Optional<User> user = userService.userProfile(username);
         if (user.isPresent()) {
             // Convert the user object to a JSON string
-            String userJson = new Gson().toJson(user.get());
-            return ResponseEntity.status(HttpStatus.OK).body(userJson);
+//            String userJson = new Gson().toJson(user.get());
+            return ResponseEntity.status(HttpStatus.OK).body(user.get());
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Refresh Token");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
 
@@ -71,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("user/v1/laundry")
-    public ResponseEntity<List<Laundry>> getAllLaundry(
+    public ResponseEntity<List<LaundryDTO>> getAllLaundry(
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String authHeader
     ){
         String token = authHeader.substring(7);
@@ -79,7 +81,12 @@ public class UserController {
 
         List<Laundry> result = laundryService.getLaundryForUser(userService.userProfile(userId).get());
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        List <LaundryDTO> answer = new ArrayList<>();
+        for(Laundry laundry : result){
+            answer.add(new LaundryDTO(laundry));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(answer);
     }
 
     @PostMapping("user/v1/submit")

@@ -4,9 +4,11 @@ package com.example.laundry.services;
 import com.example.laundry.entities.User;
 import com.example.laundry.repository.UserRepository;
 import com.example.laundry.request.UpdateProfileDTO;
+import com.example.laundry.request.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +40,18 @@ public class UserService {
             }
             userRepository.save(existingUser);
         }
+    }
+
+    public Boolean isSignUp(UserDTO userDTO){
+        return userRepository.findByEmail(userDTO.getEmail()).isEmpty();
+    }
+
+    public Optional<User> getByEmailAndPassword(String email, String password){
+        return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
 
 }
