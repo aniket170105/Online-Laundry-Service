@@ -5,6 +5,7 @@ import com.example.laundry.entities.Laundry;
 import com.example.laundry.entities.User;
 import com.example.laundry.request.LaundrySubmitDTO;
 import com.example.laundry.request.UpdateProfileDTO;
+import com.example.laundry.request.laundry.LaundryDTO;
 import com.example.laundry.services.JwtService;
 import com.example.laundry.services.LaundryService;
 import com.example.laundry.services.UserService;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("user/v1/laundry")
-    public ResponseEntity<List<Laundry>> getAllLaundry(
+    public ResponseEntity<List<LaundryDTO>> getAllLaundry(
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String authHeader
     ){
         String token = authHeader.substring(7);
@@ -79,7 +81,12 @@ public class UserController {
 
         List<Laundry> result = laundryService.getLaundryForUser(userService.userProfile(userId).get());
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        List <LaundryDTO> answer = new ArrayList<>();
+        for(Laundry laundry : result){
+            answer.add(new LaundryDTO(laundry));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(answer);
     }
 
     @PostMapping("user/v1/submit")
