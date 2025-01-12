@@ -21,6 +21,10 @@ public class SessionTokenService {
 
     public SessionToken createSessionToken(String username){
         User userInfoExtracted = userRepository.findById(username).get();
+        Optional<SessionToken> temp = sessionTokenRepository.findByUser(userInfoExtracted);
+        if(temp.isPresent()){
+            sessionTokenRepository.delete(temp.get());
+        }
         SessionToken sessionToken = new SessionToken();
         sessionToken.setUser(userInfoExtracted);
         sessionToken.setToken(UUID.randomUUID().toString());

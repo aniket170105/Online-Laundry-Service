@@ -45,7 +45,7 @@ create table shirts(
 
 
 
-
+select * from session_token;
 
 
 

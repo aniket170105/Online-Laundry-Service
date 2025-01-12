@@ -9,7 +9,6 @@ import com.example.laundry.request.laundry.LaundryDTO;
 import com.example.laundry.services.JwtService;
 import com.example.laundry.services.LaundryService;
 import com.example.laundry.services.UserService;
-//import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
