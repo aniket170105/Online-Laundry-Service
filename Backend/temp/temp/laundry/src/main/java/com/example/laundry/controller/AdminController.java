@@ -39,9 +39,9 @@ public class AdminController {
         if(userService.userProfile(userId).get().getIsAdmin().equals(Boolean.FALSE)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
-
         List<Laundry> result = laundryService.getUndeliveredLaundry();
 
+        System.out.println(result);
         List <LaundryDTO> answer = new ArrayList<>();
         for(Laundry laundry : result){
             answer.add(new LaundryDTO(laundry));

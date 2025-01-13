@@ -9,7 +9,7 @@ import com.example.laundry.request.ShirtsDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import lombok.*;
+
 import java.util.*;
 
 import java.time.LocalDateTime;
@@ -41,7 +41,7 @@ public class LaundryService {
     }
 
     public List<Laundry> getUndeliveredLaundry(){
-        return laundryRepository.findByStatusNot(LaundryStatus.DELEVIERED);
+        return laundryRepository.findByStatusNot(LaundryStatus.DELIVERED);
     }
 
     public void changeStatusOfALaundry(Laundry laundry, LaundryStatus status){

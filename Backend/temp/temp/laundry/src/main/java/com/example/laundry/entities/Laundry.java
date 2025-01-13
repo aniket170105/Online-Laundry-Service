@@ -22,7 +22,7 @@ public class Laundry {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private LaundryStatus status;
 

@@ -5,5 +5,5 @@ public enum LaundryStatus {
     PICKED,
     WASHING,
     DONE,
-    DELEVIERED
+    DELIVERED
 }

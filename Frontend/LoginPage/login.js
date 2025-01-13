@@ -14,10 +14,13 @@ document.getElementById('login-form').addEventListener('submit', async function 
             body: JSON.stringify(userDTO),
         });
 
-        const {jwtToken, sessionToken} = await response.json();
+        const {accessToken, token} = await response.json();
+        
+        console.log(accessToken);
+
         if (response.ok) {
-            window.localStorage.setItem('jwtToken', jwtToken);
-            window.localStorage.setItem('sessionToken', sessionToken);
+            window.localStorage.setItem('jwtToken', accessToken);
+            window.localStorage.setItem('sessionToken', token);
 
             window.location.href = '../UserDashboard/userDashboard.html';
             // alert(`Success: ${message}`);

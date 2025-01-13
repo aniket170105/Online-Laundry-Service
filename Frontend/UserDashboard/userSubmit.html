@@ -45,32 +45,6 @@
     </form>
   </div>
 
-  <script>
-    // Function to display selected files
-    function displayFiles(inputElement, displayElement) {
-      const files = inputElement.files;
-      // Loop through all files and append them to the display area
-      for (let i = 0; i < files.length; i++) {
-        const fileName = document.createElement('p');
-        fileName.textContent = files[i].name; // Display the name of each file
-        displayElement.appendChild(fileName);
-      }
-    }
-
-    // Get input elements and display elements
-    const shirtPhotoInput = document.getElementById('shirt-photo');
-    const pantPhotoInput = document.getElementById('pant-photo');
-    const shirtFileList = document.getElementById('shirt-file-list');
-    const pantFileList = document.getElementById('pant-file-list');
-
-    // Add event listeners to file inputs to display selected files
-    shirtPhotoInput.addEventListener('change', function() {
-      displayFiles(shirtPhotoInput, shirtFileList);
-    });
-
-    pantPhotoInput.addEventListener('change', function() {
-      displayFiles(pantPhotoInput, pantFileList);
-    });
-  </script>
+  <script src="userSubmit.js"></script>
 </body>
 </html>
