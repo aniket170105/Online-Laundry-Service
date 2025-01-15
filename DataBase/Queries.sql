@@ -45,8 +45,16 @@ create table shirts(
 
 
 
-select * from session_token;
+use laundry;
 
+insert into user value ("admin", "admin@a.a", "", 1, "", "a","admin");
+
+
+select * from laundry;
+
+select * from user;
+
+select * from session_token;
 
 
 

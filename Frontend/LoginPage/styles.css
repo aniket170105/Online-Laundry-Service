@@ -12,6 +12,12 @@ html, body {
     color: #ffffff;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 /* Navbar */
 .navbar {
     display: flex;

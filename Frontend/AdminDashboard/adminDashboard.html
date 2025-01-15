@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="adminDashboard.css">
+    <!-- <script src="adminDashboard.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          window.addEventListener('beforeunload', (event) => {
+            console.log('User is about to close the tab.');
+            event.preventDefault();
+            alert('You are not allowed to close the tab.');
+            event.returnValue = ''; // Prompt the user
+          });
+        });
+      </script>
 </head>
 <body>
     <div class="search-section">

@@ -20,24 +20,25 @@ document.querySelector('.history-section').addEventListener('click', (event) => 
   }
 });
 
-document.querySelector('.history-section').addEventListener('click', (event) => {
-  const step = event.target.closest('.step');
-  if (!step) return; // Exit if the click is not on a step
+// document.querySelector('.history-section').addEventListener('click', (event) => {
+//   const step = event.target.closest('.step');
+//   if (!step) return; // Exit if the click is not on a step
 
 
-  const allSteps = [...step.closest('.status-tracker').querySelectorAll('.step')];
-  const index = allSteps.indexOf(step);
+//   const allSteps = [...step.closest('.status-tracker').querySelectorAll('.step')];
+//   const index = allSteps.indexOf(step);
 
-  allSteps.forEach((s, i) => {
-    if (i <= index) {
-      s.classList.add('completed');
-    } else {
-      s.classList.remove('completed');
-    }
-  });
-});
+//   allSteps.forEach((s, i) => {
+//     if (i <= index) {
+//       s.classList.add('completed');
+//     } else {
+//       s.classList.remove('completed');
+//     }
+//   });
+// });
 
 document.querySelector('.info').addEventListener('click', (event) => {
+  console.log("jjjjj");
   const updateButton = event.target.closest('.log-out');
   if (!updateButton) return;
   window.localStorage.removeItem('jwtToken');
@@ -46,18 +47,18 @@ document.querySelector('.info').addEventListener('click', (event) => {
 });
 
 // Interactive status tracker logic
-document.querySelectorAll('.status-tracker .step').forEach((step, index, allSteps) => {
-  step.addEventListener('click', (event) => {
-    event.stopPropagation();
-    allSteps.forEach((s, i) => {
-      if (i <= index) {
-        s.classList.add('completed');
-      } else {
-        s.classList.remove('completed');
-      }
-    });
-  });
-});
+// document.querySelectorAll('.status-tracker .step').forEach((step, index, allSteps) => {
+//   step.addEventListener('click', (event) => {
+//     event.stopPropagation();
+//     allSteps.forEach((s, i) => {
+//       if (i <= index) {
+//         s.classList.add('completed');
+//       } else {
+//         s.classList.remove('completed');
+//       }
+//     });
+//   });
+// });
 
 
 const statusMap = {
@@ -84,8 +85,8 @@ document.addEventListener('DOMContentLoaded', async function () {
                       <p><strong>Name:</strong> ${user.username || "N/A"}</p>
                       <p><strong>Email:</strong> ${user.email || "N/A"}</p>
                       <p><strong>Hostel:</strong> ${user.hostel || "N/A"}</p>
-                      <button><a href="#" style="color: black; text-decoration: none;">Update</a></button>
-                      <button id = "log-out">Log Out</button>
+                      <button><a href="updateInfo.html" style="color: black; text-decoration: none;">Update</a></button>
+                      <button class = "log-out">Log Out</button>
                   `;
     }
     else {
@@ -125,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         const currentStep = statusMap[status] || 0;
 
         historySection.innerHTML += `
-                    <div class="history-item" onclick="toggleDetails(${index})">
+                    <div class="history-item">
                         <h3>Laundry ID: ${laundry.id}</h3>
                         <p>Status: ${laundry.status}</p>
                         <p>Submitted Time: ${new Date(laundry.date).toLocaleString()}</p>
@@ -179,6 +180,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
   catch (error) {
     alert("An error occurred: " + error.message);
+    window.location.href = '../LoginPage/login.html';
     console.log(error);
   }
 });

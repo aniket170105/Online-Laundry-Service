@@ -1,3 +1,19 @@
+const statusMap = {
+    "PENDING": 1,
+    "PICKED": 2,
+    "WASHING": 3,
+    "DONE": 4,
+    "DELIVERED": 5,
+};
+
+const statusMapReverse = {
+    1: "PENDING",
+    2: "PICKED",
+    3: "WASHING",
+    4: "DONE",
+    5: "DELIVERED",
+};
+
 document.querySelector('.history-section').addEventListener('click', (event) => {
     const item = event.target.closest('.history-item');
     const step = event.target.closest('.step');
@@ -9,19 +25,37 @@ document.querySelector('.history-section').addEventListener('click', (event) => 
     }
 });
 
-document.querySelector('.history-section').addEventListener('click', (event) => {
+document.querySelector('.history-section').addEventListener('click', async (event) => {
     const step = event.target.closest('.step');
     if (!step) return; // Exit if the click is not on a step
     const allSteps = [...step.closest('.status-tracker').querySelectorAll('.step')];
     const index = allSteps.indexOf(step);
 
-    allSteps.forEach((s, i) => {
-        if (i <= index) {
-            s.classList.add('completed');
-        } else {
-            s.classList.remove('completed');
-        }
+    const id = step.closest('.history-item').getAttribute('data-id');
+
+    const response = await fetch(`http://localhost:8081/admin/v1/changeStatus`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionStorage.getItem('jwtTokenAdmin')}`,
+        },
+        body: JSON.stringify({"id" : id, "status" : statusMapReverse[index + 1]}),
     });
+
+    console.log({"id" : id, "status" : statusMapReverse[index + 1]});
+
+    if(response.ok) {
+        allSteps.forEach((s, i) => {
+            if (i <= index) {
+                s.classList.add('completed');
+            } else {
+                s.classList.remove('completed');
+            }
+        });
+    }
+    else {
+        alert(`Failed to update status + ${await response.text()}`);
+    }
 });
 
 document.querySelector('.search-section').addEventListener('click', (event) => {
@@ -40,45 +74,6 @@ document.querySelector('.search-section').addEventListener('click', (event) => {
         }
     });
 });
-
-// Add this event listener
-window.addEventListener('beforeunload', (event) => {
-    // Show confirmation dialog
-    event.preventDefault();
-    event.returnValue = ''; // Required for some browsers
-    
-    // Clean up any data/tokens
-    sessionStorage.removeItem('jwtTokenAdmin');
-    sessionStorage.removeItem('sessionTokenAdmin');
-    
-    // Optional: Save any pending changes
-    // localStorage.setItem('pendingChanges', JSON.stringify(pendingData));
-    
-    // Note: Custom messages in modern browsers are replaced with generic one
-    return 'Are you sure you want to leave this page?';
-});
-
-// document.getElementById('search-btn').addEventListener('click', () => {
-//     const query = document.getElementById('search-bar').value.trim();
-//     const historyItems = document.querySelectorAll('.history-item');
-
-//     historyItems.forEach(item => {
-//         const id = item.getAttribute('data-id');
-//         if (query === '' || id.includes(query)) {
-//             item.style.display = 'block'; // Show matching items
-//         } else {
-//             item.style.display = 'none'; // Hide non-matching items
-//         }
-//     });
-// });
-
-const statusMap = {
-    "PENDING": 1,
-    "PICKED": 2,
-    "WASHING": 3,
-    "DONE": 4,
-    "DELIVERED": 5,
-};
 
 document.addEventListener('DOMContentLoaded', async function () {
     const authtoken = sessionStorage.getItem('jwtTokenAdmin');

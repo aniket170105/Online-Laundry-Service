@@ -48,7 +48,7 @@ public class UserController {
     }
 
 
-    @PostMapping("user/v1/update")
+    @PutMapping("user/v1/update")
     public ResponseEntity<String> updateProfile(
             @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = true) String authHeader,
             @RequestBody UpdateProfileDTO updateProfileDTO
@@ -63,7 +63,7 @@ public class UserController {
         try{
             userService.updateUser(userId, updateProfileDTO);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body("User Data Succesfully Updated");
+                    .body("User Data Successfully Updated");
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
