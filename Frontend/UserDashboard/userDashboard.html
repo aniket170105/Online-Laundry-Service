@@ -6,6 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Online Laundry - Dark Theme</title>
     <link rel="stylesheet" href="userDashboard.css">
+
+    <script>
+        window.onload = async function () {
+            const userToken = sessionStorage.getItem('sessionToken');
+            if(adminToken){
+                console.log('User is logged in');
+                try{
+                    const response = await fetch('http://localhost:8081/auth/v1/refreshToken', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            token : `${userToken}`
+                        }),
+                    });
+                    if(response.ok){
+                        const {accessToken, token} = await response.json();
+                        window.localStorage.setItem('jwtToken', accessToken);
+                        window.localStorage.setItem('sessionToken', token);
+                    }
+                    else{
+                        window.location.href = '../HomePage/home.html';
+                    }
+                }
+                catch(err){
+                    console.log(err);
+                    window.location.href = '../HomePage/home.html';
+                }
+            } else {
+                window.location.href = '../HomePage/home.html';
+            }
+        }
+    </script>
+
 </head>
 
 <body>

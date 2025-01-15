@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = document.getElementById("name").value;
         const hostel = document.getElementById("hostel").value;
         const password = document.getElementById("password").value;
+
+
+
         const payload = {
             username: name,
             hostel: hostel,

@@ -41,7 +41,10 @@ public class LaundryService {
     }
 
     public List<Laundry> getUndeliveredLaundry(){
-        return laundryRepository.findByStatusNot(LaundryStatus.DELIVERED);
+        List <Laundry> result = laundryRepository.findByStatusNot(LaundryStatus.DELIVERED);
+        result.sort(Comparator.comparing(Laundry::getDate).reversed());
+        return result;
+//        return laundryRepository.findByStatusNot(LaundryStatus.DELIVERED);
     }
 
     public void changeStatusOfALaundry(Laundry laundry, LaundryStatus status){

@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laundry Service</title>
     <link rel="stylesheet" href="styles.css">
+    <script>
+        const isUserLogeedIn = window.localStorage.getItem('jwtToken');
+        if(isUserLogeedIn) {
+            window.location.href = '../UserDashboard/userDashboard.html';
+        }
+
+        const isAdminLoggedIn = sessionStorage.getItem('jwtTokenAdmin');
+        console.log(isAdminLoggedIn);
+        if(isAdminLoggedIn) {
+            window.location.href = '../AdminDashboard/adminDashboard.html';
+        }
+    </script>
 </head>
 <body>
     <header class="navbar">

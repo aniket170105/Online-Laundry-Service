@@ -10,6 +10,11 @@
         if(isUserLogeedIn) {
             window.location.href = '../UserDashboard/userDashboard.html';
         }
+
+        const isAdminLoggedIn = sessionStorage.getItem('jwtTokenAdmin');
+        if(isAdminLoggedIn) {
+            window.location.href = '../AdminDashboard/adminDashboard.html';
+        }
     </script>
 </head>
 <body>
@@ -33,8 +38,12 @@
                     Copper mug try-hard pitchfork pour-over freegan heirloom neutral air plant cold-pressed tacos.
                 </p> -->
                 <div class="hero-buttons">
-                    <button class="btn btn-signup">Sign Up</button>
-                    <button class="btn btn-login">Login</button>
+                    <button class="btn btn-signup">
+                        <a href="../SignUpPage/signup.html" style="text-decoration: none; color: white;">Sign Up</a>
+                    </button>
+                    <button class="btn btn-login">
+                        <a href="../LoginPage/login.html" style="text-decoration: none; color: white;">Login</a>
+                    </button>
                 </div>
             </div>
             <div class="hero-image">

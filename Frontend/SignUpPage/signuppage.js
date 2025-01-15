@@ -20,6 +20,7 @@ document.getElementById('signup-form').addEventListener('submit', async function
         const message = await response.text();
         if (response.ok) {
             alert(`Success: ${message}`);
+            window.location.href = '../LoginPage/login.html';
         } else {
             alert(`Error: ${message}`);
         }

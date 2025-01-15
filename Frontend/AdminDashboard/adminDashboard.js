@@ -58,6 +58,12 @@ document.querySelector('.history-section').addEventListener('click', async (even
     }
 });
 
+// document.getElementById('logout-btn').addEventListener('click', () => {
+//     sessionStorage.removeItem('jwtTokenAdmin');
+//     sessionStorage.removeItem('sessionTokenAdmin');
+//     window.location.href = '../AdminLoginPage/adminLogin.html';
+// });
+
 document.querySelector('.search-section').addEventListener('click', (event) => {
     const step = event.target.closest('.search-button');
     if(!step) return;

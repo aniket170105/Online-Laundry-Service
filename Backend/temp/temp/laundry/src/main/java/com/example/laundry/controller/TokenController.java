@@ -69,14 +69,5 @@ public class TokenController {
         else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-//        return refreshTokenService.findByToken(refreshTokenRequestDTO.getToken())
-//                .map(refreshTokenService::verifyExpiration)
-//                .map(RefreshToken::getUserInfo)
-//                .map(userInfo -> {
-//                    String accessToken = jwtService.GenerateToken(userInfo.getUsername());
-//                    return JwtResponseDTO.builder()
-//                            .accessToken(accessToken)
-//                            .token(refreshTokenRequestDTO.getToken()).build();
-//                }).orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));
     }
 }
