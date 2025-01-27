@@ -37,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const shirtFiles = document.getElementById("shirt-photo").files;
         const pantFiles = document.getElementById("pant-photo").files;
 
+        console.log(pantFiles);
+
         const additionalMessage = `Number of shirts: ${shirtCount}, Number of pants: ${pantCount}`;
         
         const shirts = await processImages(shirtFiles);
