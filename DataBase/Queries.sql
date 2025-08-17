@@ -47,7 +47,7 @@ create table shirts(
 
 use laundry;
 
-insert into user value ("admin", "admin@a.a", "", 1, "", "a","admin");
+insert into user value ("admin", "admin@admin.admin", "", 1, "", "$2a$10$3T0Ovlu4.VQGYf8QI2J2pusAIi/y3pl7ypxviL65Rsx5iMZFcN3He","admin");
 
 
 select * from laundry;

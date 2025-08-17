@@ -1,0 +1,51 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: laundry-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_DATABASE: laundry
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./DataBase/create-db.sql:/docker-entrypoint-initdb.d/00_create_db.sql:ro
+      - ./DataBase/ensure-db.sql:/docker-entrypoint-initdb.d/01_ensure_db.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$$MYSQL_ROOT_PASSWORD || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 2000
+      start_period: 60s
+
+  backend:
+    build:
+      context: ./Backend/laundry
+    container_name: laundry-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8081
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: laundry
+      DB_USER: root
+      DB_PASSWORD: changeme
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./Frontend
+    container_name: laundry-frontend
+    depends_on:
+      - backend
+    ports:
+      - "1080:80"
+    restart: unless-stopped
+
+volumes:
+  db_data:
